@@ -18,7 +18,7 @@ Follow these steps to get The Brilliant Portal up and running:
    Open a terminal and run the following command to clone the repository:
 
    ```bash
-   git clone https://github.com/<USERNAME>/the-brilliant-portal.git
+   git clone https://github.com/VajraK/The-Brilliant-Portal.git
    cd the-brilliant-portal
    ```
 
