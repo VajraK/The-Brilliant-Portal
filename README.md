@@ -1,6 +1,6 @@
 # The Brilliant Portal (TBP)
 
-The Brilliant Portal is a React-based web application that includes interactive elements such as a blog, a map using Leaflet, and a 3D animation using Three.js. This README will guide you through the steps needed to install and run the project locally.
+The Brilliant Portal is a React-based web application that includes interactive elements such as a blog, a map using Leaflet, and a 3D animation using Three.js. This README will guide you through the steps needed to install and run the project locally and then set it up with Nginx.
 
 ## Prerequisites
 
@@ -8,6 +8,8 @@ Before installing and running the project, make sure you have the following inst
 
 - **Node.js** (v14 or higher) and **npm** (Node Package Manager)
 - **Git** (to clone the repository)
+- **Nginx** (to serve the application)
+- **Certbot** (to obtain SSL certificates)
 
 ## Installation Steps
 
@@ -32,27 +34,74 @@ Follow these steps to get The Brilliant Portal up and running:
 
    This command will install all the packages listed in `package.json`, including React, Leaflet, and React Router.
 
-3. **Start the Development Server**
+3. **Build the Application**
 
-   To start the development server, run the following command:
+   To prepare the application for production, run the following command to create an optimized build:
 
    ```bash
-   npm start
+   npm run build
    ```
 
-   This will start the React development server and open the application in your default web browser. By default, it runs at `http://localhost:3000`.
+   This will generate a `build/` directory with all the necessary static files to serve the application.
 
-4. **Navigate Through the Application**
+4. **Configure Nginx**
 
-   - **Home**: The main page welcoming users to The Brilliant Portal.
-   - **Blog**: A sample blog page showcasing content.
-   - **Map**: An interactive map using Leaflet. Clicking on the marker will take you to the 3D animation page.
-   - **Animation**: A 3D scene rendered using React Three Fiber.
+   After building the application, configure Nginx to serve the static files. Follow these steps:
+
+   - Create a new Nginx configuration file for The Brilliant Portal:
+
+     ```bash
+     sudo nano /etc/nginx/sites-available/the-brilliant-portal
+     ```
+
+   - Add the following configuration:
+
+     ```nginx
+     server {
+         listen 80;
+         server_name your_domain_or_IP;
+
+         root /path/to/The-Brilliant-Portal/build;
+         index index.html;
+
+         location / {
+             try_files $uri /index.html;
+         }
+     }
+     ```
+
+     Make sure to replace `/path/to/The-Brilliant-Portal/build` with the actual path to the `build/` directory on your server, and replace `your_domain_or_IP` with your domain name or server IP address.
+
+   - Enable the Nginx configuration by creating a symbolic link to the `sites-enabled` directory:
+
+     ```bash
+     sudo ln -s /etc/nginx/sites-available/the-brilliant-portal /etc/nginx/sites-enabled/
+     ```
+
+5. **Obtain SSL Certificate with Certbot**
+
+   To secure your application with HTTPS, use Certbot to obtain an SSL certificate:
+
+   ```bash
+   sudo certbot --nginx -d your_domain_or_IP
+   ```
+
+   Follow the prompts to complete the certificate installation. Certbot will automatically update your Nginx configuration to use SSL.
+
+6. **Restart Nginx**
+
+   After saving the Nginx configuration, restart Nginx to apply the changes:
+
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+   Your application should now be accessible via your domain or IP address with HTTPS.
 
 ## Project Structure
 
 - **src/**: Contains all the source files for the React application.
-  - **pages/**: Includes individual page components such as `Home`, `Blog`, `Map`, and `Animation`.
+  - **pages/**: Includes individual page components such as Home, Blog, Map, and Animation.
   - **App.js**: The main application component that sets up routing.
 
 ## Scripts
