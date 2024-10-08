@@ -19,10 +19,8 @@ Follow these steps to get The Brilliant Portal up and running:
 
    ```bash
    git clone https://github.com/VajraK/The-Brilliant-Portal.git
-   cd the-brilliant-portal
+   cd The-Brilliant-Portal
    ```
-
-   Replace `<USERNAME>` with your GitHub username if necessary.
 
 2. **Install Dependencies**
 
