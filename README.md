@@ -98,6 +98,54 @@ Follow these steps to get The Brilliant Portal up and running:
 
    Your application should now be accessible via your domain or IP address with HTTPS.
 
+## Updating the Project
+
+To update The Brilliant Portal to the latest version from the GitHub repository, follow these steps:
+
+1. **Navigate to the Project Directory**
+
+   Open a terminal and change to the project directory where you initially cloned the repository:
+
+   ```bash
+   cd /path/to/The-Brilliant-Portal
+   ```
+
+2. **Fetch the Latest Changes from the GitHub Repository**
+
+   Pull the latest changes from the main branch of the GitHub repository:
+
+   ```bash
+   git pull origin main
+   ```
+
+   If your local changes conflict with the updates, you may need to resolve the conflicts manually before proceeding.
+
+3. **Install New Dependencies**
+
+   If there were any updates to package.json, you may need to install new dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. **Rebuild the Application**
+
+   Rebuild the application to reflect the latest updates:
+
+   ```bash
+   npm run build
+   ```
+
+5. **Restart Nginx**
+
+   If necessary, restart Nginx to apply any changes:
+
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+   Your application should now be updated and running the latest version.
+
 ## Project Structure
 
 - **src/**: Contains all the source files for the React application.
