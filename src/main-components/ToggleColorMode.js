@@ -1,20 +1,27 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-
+// src/components/ToggleColorMode.js
+import React from 'react';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
+import ColorModeContext from '../contexts/ColorModeContext';
 
-function ToggleColorMode({ mode, toggleColorMode, ...props }) {
+function ToggleColorMode(props) {
+  const theme = useTheme();
+  const { toggleColorMode } = React.useContext(ColorModeContext); // Consume context
+
   return (
     <IconButton
       onClick={toggleColorMode}
-      color="primary"
+      color="inherit"
       size="small"
-      aria-label="Theme toggle button"
+      aria-label="Toggle theme"
+      sx={{
+        color: theme.palette.mode === 'light' ? '#000000' : 'inherit', // Golden in light mode
+      }}
       {...props}
     >
-      {mode === 'dark' ? (
+      {theme.palette.mode === 'dark' ? (
         <WbSunnyRoundedIcon fontSize="small" />
       ) : (
         <ModeNightRoundedIcon fontSize="small" />
@@ -22,10 +29,5 @@ function ToggleColorMode({ mode, toggleColorMode, ...props }) {
     </IconButton>
   );
 }
-
-ToggleColorMode.propTypes = {
-  mode: PropTypes.oneOf(['dark', 'light']).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-};
 
 export default ToggleColorMode;

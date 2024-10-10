@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Container,
+  Divider,
+  MenuItem,
+  Drawer,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ToggleColorMode from './ToggleColorMode';
-import logo from '../assets/BP-logo-X.png'; // Adjust the path as needed
+import logo from '../assets/BP-logo-X.png';
 
 // Styled Toolbar with custom styles
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -33,13 +35,12 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 // Define your navigation items
 const navItems = [
   { title: 'Home', path: '/' },
-  { title: 'Blog', path: '/blog' },
   { title: 'Map', path: '/map' },
-  { title: 'Animation', path: '/animation' },
+  { title: 'About', path: '/about' },
   // Add more items as needed
 ];
 
-export default function AppAppBar({ mode, toggleColorMode }) {
+export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
 
   // Function to toggle the Drawer open state
@@ -51,6 +52,7 @@ export default function AppAppBar({ mode, toggleColorMode }) {
     <AppBar
       position="fixed"
       sx={{
+        top: { xs: '10px', sm: '20px' }, // Adjust top offset here
         boxShadow: 0,
         bgcolor: 'transparent',
         backgroundImage: 'none',
@@ -60,15 +62,20 @@ export default function AppAppBar({ mode, toggleColorMode }) {
         <StyledToolbar variant="dense" disableGutters>
           {/* Desktop Navigation */}
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
-            {/* Replace <Sitemark /> with the Logo Image */}
+            {/* Logo Image */}
             <Box
               component="img"
               src={logo}
               alt="The Brilliant Portal Logo"
               sx={{
-                height: 40, // Adjust height as needed
+                height: { xs: 30, sm: 40 }, // Responsive height
                 width: 'auto',
                 mr: 2, // Margin right for spacing
+                transition: 'transform 0.2s, opacity 0.2s',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  opacity: 0.8,
+                },
               }}
             />
             <Box sx={{ display: { xs: 'none', md: 'flex' }, ml: 2 }}>
@@ -96,7 +103,7 @@ export default function AppAppBar({ mode, toggleColorMode }) {
               alignItems: 'center',
             }}
           >
-            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+            <ToggleColorMode />
             <Button
               color="primary"
               variant="text"
@@ -139,14 +146,16 @@ export default function AppAppBar({ mode, toggleColorMode }) {
                     onClick={toggleDrawer(false)}
                     aria-label="Close menu"
                     size="small"
+                    sx={{ p: 0.5 }}
                   >
-                    <CloseRoundedIcon/>
+                    <CloseRoundedIcon fontSize="small" />
                   </IconButton>
 
                   {/* Toggle Color Mode */}
                   <ToggleColorMode
-                    mode={mode}
-                    toggleColorMode={toggleColorMode}
+                    sx={{
+                      p: 0.5,
+                    }}
                   />
                 </Box>
                 <Divider sx={{ my: 3 }} />
